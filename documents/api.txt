@@ -1,0 +1,128 @@
+
+发送品牌商登陆验证码
+/nft-web-api/public/send-producer-login-code
+HTTP方法: POST
+参数格式: x-www-form-urlencoded
+参数:
+  email String 电子邮件地址
+注: 成功调用后验证码会由系统发送至参数中指定的邮箱，长时间不使用会过期
+调用例子:
+curl -X POST -d 'email=<替换为邮箱地址>' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/send-producer-login-code
+
+---------- * ---------- * ----------- * -----------
+
+品牌商登陆
+/nft-web-api/public/producer-login
+HTTP方法: POST
+参数格式: x-www-form-urlencoded
+参数:
+  email		String	电子邮件地址
+  loginCode	String	登陆验证码
+注: 返回的session字段需要保存至名为token的Header中
+调用例子: 
+curl -X POST -d 'email=<邮箱地址>&loginCode=<登陆码>' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/producer-login
+
+---------- * ---------- * ----------- * -----------
+
+获取当前登陆的品牌商的信息
+/nft-web-api/producer/producer-profile
+HTTP方法: POST
+参数: 无
+调用例子:
+curl -X POST -b 'nft-producer-token=jack@ahawechat.com' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/producer/producer-profile
+
+---------- * ---------- * ----------- * -----------
+
+已登陆的品牌商更新账户信息
+/nft-web-api/producer/update-producer-profile
+参数格式: x-www-form-urlencoded
+参数:
+  name: 企业名
+  representative: 负责人
+  contact: 联络方式
+  license: 营业执照照片URL
+调用例子:
+curl -X POST -H 'nft-producer-token: jack@ahawechat.com' -d 'name=品牌商-jack@ahawechat.com&contact=联系方式1' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/producer/update-producer-profile
+
+---------- * ---------- * ----------- * -----------
+
+查询公开的NFT
+/nft-web-api/public/paged-search-nft
+参数格式: x-www-form-urlencoded
+参数:
+  status: NFT状态 2待解锁 3已解锁
+  current: 当前页
+  size: 每页显示的条数
+调用例子:
+curl -X POST -d 'current=1&size=5' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/paged-search-nft
+
+---------- * ---------- * ----------- * -----------
+
+检查获取码是否有效并查询对应的NFT
+/nft-web-api/public/find-nft-by-unlock-key
+参数格式: url query
+参数:
+  key: 获取码
+调用例子:
+curl -X GET http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/find-nft-by-unlock-key?key=aabb
+
+---------- * ---------- * ----------- * -----------
+
+按code查询对应的NFT
+/nft-web-api/public/find-nft-by-code
+参数格式: x-www-form-urlencoded
+参数:
+  code: NFT code
+调用例子:
+curl -X POST -d 'code=4a080f8ac902442fadc0f716de5bbc6a' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/find-nft-by-code
+
+---------- * ---------- * ----------- * -----------
+
+将NFT转移至指定以太坊地址
+/nft-web-api/public/transfer-nft-to-address
+参数格式: x-www-form-urlencoded
+参数:
+  key: 获取码
+  address: 以太坊地址
+调用例子:
+curl -X POST -d 'key=aabb1&address=addr1' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/public/transfer-nft-to-address
+
+---------- * ---------- * ----------- * -----------
+
+创建NFT
+/nft-web-api/producer/create-nft
+参数格式: x-www-form-urlencoded
+参数:
+  name 产品名称
+  image 设计图
+  releaseDate 出厂日期
+  productCode 产品编号
+  trademark 注册商标
+  description IP介绍
+调用例子:
+curl -X POST -b 'nft-producer-token=jack@ahawechat.com' -d 'name=name16&description=description16' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/producer/create-nft
+
+---------- * ---------- * ----------- * -----------
+
+搜索当前登陆的品牌商拥有的NFT
+/nft-web-api/producer/paged-search-nft
+参数格式: x-www-form-urlencoded
+参数:
+  current: 当前页
+  size: 每页显示的条数
+调用例子:
+curl -X POST -H 'nft-producer-token: jack@ahawechat.com' -d 'current=1&size=5' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/producer/paged-search-nft
+
+---------- * ---------- * ----------- * -----------
+
+品牌商上传图片
+/nft-web-api/producer/upload-image
+参数格式: multipart/form-data
+参数:
+  file: 需要上传的文件
+调用例子:
+curl -F "file=@file1.png" -b 'nft-producer-token=jack@ahawechat.com' http://tjtest.pugongyinghulian.com/luckdraw-nft-api/nft-web-api/producer/upload-image
+返回例子:
+{"code":0,"msg":"成功","jpMsg":"成功しました","results":"miniprohh-1300777907.cos.ap-hongkong.myqcloud.com/minipro/38369825_power_64.png"}
+
+---------- * ---------- * ----------- * -----------
